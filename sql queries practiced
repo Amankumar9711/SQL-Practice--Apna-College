@@ -1,0 +1,53 @@
+
+-- 1. Table Creation
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    marks INT
+);
+
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50),
+    student_id INT,
+    FOREIGN KEY (student_id) REFERENCES Students(student_id)
+);
+
+-- 2. Insert Statements
+INSERT INTO Students VALUES (1, 'Amit', 20, 85);
+INSERT INTO Students VALUES (2, 'Priya', 21, 92);
+INSERT INTO Students VALUES (3, 'Rahul', 22, 76);
+
+INSERT INTO Courses VALUES (101, 'SQL Basics', 1);
+INSERT INTO Courses VALUES (102, 'Advanced SQL', 2);
+
+-- 3. Basic SELECT Queries
+SELECT * FROM Students;
+SELECT name, marks FROM Students WHERE marks > 80;
+
+-- 4. Aggregate Functions
+SELECT AVG(marks) AS average_marks FROM Students;
+SELECT COUNT(*) AS total_students FROM Students;
+
+-- 5. GROUP BY and HAVING
+SELECT age, COUNT(*) AS count_by_age
+FROM Students
+GROUP BY age
+HAVING COUNT(*) > 1;
+
+-- 6. JOIN Queries
+SELECT s.name, c.course_name
+FROM Students s
+JOIN Courses c ON s.student_id = c.student_id;
+
+-- 7. Subqueries
+SELECT name
+FROM Students
+WHERE marks > (
+    SELECT AVG(marks) FROM Students
+);
+
+-- 8. UPDATE and DELETE
+UPDATE Students SET marks = marks + 5 WHERE student_id = 3;
+DELETE FROM Students WHERE marks < 50;
